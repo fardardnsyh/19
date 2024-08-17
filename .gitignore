@@ -1,0 +1,7 @@
+.env
+app/instance/diary_app.db
+instance/diary_app.db
+app/__pycache__/
+__pycache__/
+app/app.yaml
+app/.gcloudignore

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-center p-3">日記個別ページ</h2>
+
+
+
+<div class="card mx-auto mb-4 shadow-sm" style="max-width: 64rem;">
+    <div class="card-header">日記管理ID: {{ diary.id }}（ユーザーID: {{ diary.user_id }}）</div>
+    <div class="card-header">作成日時: {{ diary.create_at.strftime('%Y/%m/%d %H:%M') }}（最終更新: {{ diary.update_at.strftime('%Y/%m/%d %H:%M') }}）</div>
+    <div class="card-body">
+        <div class="emotion mb-3">
+            <h5 class="card-title mb-2">感情: {{ diary.emotion }}</h5>
+            <div class="progress mb-2" role="progressbar">
+                <div class="progress-bar bg-success" style='width: {{ diary.emotion_degree }}%'>{{ diary.emotion_degree }}%</div>
+            </div>
+        </div>
+        <div class="card-text mb-2 overflow-hidden">
+            記録内容
+        </div>
+        {% if diary.response != "" %}
+            <div class="card bg-body-tertiary mb-3">
+                <div class="card-text m-2 overflow-hidden">
+                    {{ diary.body }}
+                </div>
+            </div>
+            <div class="card-text mb-2 overflow-hidden">
+                EmotionAIからの返答
+            </div>
+            <div class="card bg-body-tertiary mb-3">
+                <div class="card-text m-2 overflow-hidden">
+                    {{ diary.response }}
+                </div>
+            </div>
+        {% else %}
+            <div class="card-text">
+                No Description
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-7"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-6"></span>
+                    <span class="placeholder col-8"></span>
+                </p>
+            </div>
+        {% endif %}
+        <div class="text-end">
+            <div class="btn-group my-2" role="group">
+                <a href="/diaries/{{ diary.id }}/edit" class="btn btn-secondary" id="edit_diary">Edit</a>
+                <a href="/diaries/{{ diary.id }}/delete" class="btn btn-danger" id="delete_diary">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="diary_body" value="{{ diary.body }}"></div>
+<div id="diary_id" value="{{ diary.id }}"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/diary.js') }}"></script>
+{% endblock %}
